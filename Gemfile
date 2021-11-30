@@ -57,3 +57,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 #install Faraday
 gem 'faraday'
+
+#install Figaro
+gem 'figaro'
+
+#install Boostrap
+gem 'bootstrap', '~> 5.1', '>= 5.1.3'
