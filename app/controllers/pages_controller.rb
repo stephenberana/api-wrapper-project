@@ -7,7 +7,7 @@ class PagesController < ApplicationController
             @game_instance = client.search_games
             @screenshot = client.screenshots
 
-        rescue => ApiExceptions::UnauthorizedError
+        rescue ApiExceptions::UnauthorizedError
             @error = true
         end
    end

@@ -1,3 +1,5 @@
+require 'faraday'
+
 module IGDBApi
       module V4
         class Client
@@ -8,50 +10,85 @@ module IGDBApi
             BEARER_TOKEN = ENV['bearer_token']
             CLIENT_ID = ENV['client_id']
 
+            def initialize
+            end
 
             #defining endpoints
 
             def index_games
                 request(
                     http_method: :get,
-                    endpoint: "/games"  
+                    endpoint: "/games",
+                    params: {
+                        fields: 'name,summary,total_rating_count,url',
+                        limit: 10,
+                    },
+                    headers: {
+                        "Client-ID" => "#{CLIENT_ID}",
+                        "Authorization" => "Bearer #{BEARER_TOKEN}"
+                    },
                 )
             end
 
             def index_companies
                 request(
                     http_method: :get,
-                    endpoint: "/companies"
+                    endpoint: "/companies",
+                    params: {
+                        fields: 'name,description,url',
+                        limit: 10,
+                    },
+                    headers: {
+                        "Client-ID" => "#{CLIENT_ID}",
+                        "Authorization" => "Bearer #{BEARER_TOKEN}"
+                    },
                 )
             end
 
-            def search_games(game)
+            def index_platforms
                 request(
                     http_method: :get,
-                    endpoint: "/search/#{game}"
+                    endpoint: "/platforms",
+                    params: {
+                        fields: "name,description,url",
+                        limit: 10,
+                    },
+                    headers: {
+                        "Client-ID" => "#{CLIENT_ID}",
+                        "Authorization" => "Bearer #{BEARER_TOKEN}"
+                    },
                 )
             end
 
-            def screenshots
+           def search_game
                 request(
                     http_method: :get,
-                    endpoint: "/screenshots"
+                    endpoint: "/search",
+                    params: {
+                        field: "*",
+                        search: "Fatal Frame",
+                        limit: 20,
+                    },
+                    headers: {
+                        "Client-ID" => "#{CLIENT_ID}",
+                        "Authorization" => "Bearer #{BEARER_TOKEN}"
+                    },
                 )
-            end
+           end
 
             private
 
             def connection
                 @connection ||= Faraday.new(
                     url: ROOT_URL,
-                    headers : {
-                        'Client-ID' => "#{CLIENT_ID}"
-                        "Authorization" => "Bearer #{BEARER_TOKEN}"
+                    headers: {
+                        'Client-ID' => "#{CLIENT_ID}",
+                        'Authorization' => "Bearer #{BEARER_TOKEN}"
                     },
                 )
             end
 
-            def request(http_method:, endpoint:, params: nil, headers: nil)
+            def request(http_method:, endpoint:, params:, headers:)
                 @response = connection.public_send(http_method, endpoint, params, headers)
                 parsed_response = JSON.parse(@response.body)
                 if @response.status == HTTP_OK_CODE
@@ -59,6 +96,11 @@ module IGDBApi
                 else
                     raise error_class
                 end
+            end
+
+            def headers
+                'Client-ID' => "#{CLIENT_ID}",
+                'Authorization' => "Bearer #{BEARER_TOKEN}"
             end
 
             def error_class
