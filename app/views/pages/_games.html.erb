@@ -3,19 +3,17 @@
     <thead>
     <tr>
         <th scope="col">Game</th>
-        <th scope="col">Summary</th>
+        <th scope="col">Release Date</th>
         <th scope="col">Total Rating Count</th>
-        <th scope="col">Link</th>
     </tr>
     </thead>
 
     <tbody>
-        <% @games.each do |game| %>
+        <% @games.each do |games| %>
             <tr>
-                <td><%= game['name'] %></td>
-                <td><%= game['summary'] %></td>
-                <td><%= game['total_rating_count']%></td>
-                <td><%= game['url']%></td>
+                <td><%= @games.fourth[1][0]['name'] %></td>
+                <td><%= @games.fourth[1][0]['released']%></td>
+                <td><%= @games.fourth[1][0]['rating']%></td>
             <%end%>
         </tbody>
     </table>

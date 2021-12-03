@@ -1,0 +1,23 @@
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Publisher</th>
+        <th scope="col">Publisher ID</th>
+        <th scope="col">Game Count</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        <% @publishers.each do |publishers| %>
+            <tr>
+                <td><%= @publishers.fourth[1][0]['name'] %></td>
+                <td><%= @publishers.fourth[1][0]['id'] %></td>
+                <td><%= @publishers.fourth[1][0]['games_count']%></td>
+            <%end%>
+        </tbody>
+    </table>
+
+    <br> 
+     
+</div>

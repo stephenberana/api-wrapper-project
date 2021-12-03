@@ -9,6 +9,7 @@ module IGDBApi
             ROOT_URL = "https://api.igdb.com/v4"
             BEARER_TOKEN = ENV['bearer_token']
             CLIENT_ID = ENV['client_id']
+            USER_AGENT = "PostmanRuntime/7.28.3"
 
             def initialize
             end
@@ -83,7 +84,8 @@ module IGDBApi
                     url: ROOT_URL,
                     headers: {
                         'Client-ID' => "#{CLIENT_ID}",
-                        'Authorization' => "Bearer #{BEARER_TOKEN}"
+                        'Authorization' => "Bearer #{BEARER_TOKEN}",
+                        'User-Agent' => "#{USER_AGENT}"
                     },
                 )
             end
@@ -98,11 +100,6 @@ module IGDBApi
                 end
             end
 
-            def headers
-                'Client-ID' => "#{CLIENT_ID}",
-                'Authorization' => "Bearer #{BEARER_TOKEN}"
-            end
-
             def error_class
                 case @response.status
                 when HTTP_NOT_FOUND_CODE
@@ -110,6 +107,7 @@ module IGDBApi
                 when HTTP_UNAUTHORIZED_CODE
                     UnauthorizedError
                 else
+                    byebug
                     ApiError
                 end
             end

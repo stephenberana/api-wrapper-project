@@ -1,0 +1,21 @@
+<div class="table-responsive">
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th scope="col">Genre</th>
+        <th scope="col">ID</th>
+    </tr>
+    </thead>
+
+    <tbody>
+        <% @genres.each do |genres| %>
+            <tr>
+                <td><%= @genres.fourth[1][0]['name'] %></td>
+                <td><%= @genres.fourth[1][0]['id'] %></td>
+            <%end%>
+        </tbody>
+    </table>
+
+    <br> 
+     
+</div>

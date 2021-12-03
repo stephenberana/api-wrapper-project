@@ -1,11 +1,13 @@
 class PagesController < ApplicationController
-   def main
-        client = IGDBApi::V4::Client.new 
+    
+    def main
+        client = RAWGApi::Api::Client.new
         begin
+            byebug
             @games = client.index_games
-            @companies = client.index_companies
-            @game_instance = client.search_games
-            @screenshot = client.screenshots
+            @genres = client.index_genres
+            @developers = client.index_developers
+            @publishers = client.index_publishers
 
         rescue ApiExceptions::UnauthorizedError
             @error = true
